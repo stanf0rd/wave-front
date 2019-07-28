@@ -1,0 +1,11 @@
+# IDE settings
+.vscode/settings.json
+
+# Dependencies
+node_modules
+
+# Generated bundles
+dist
+
+# OS stuff
+.DS_Store
