@@ -1,5 +1,19 @@
 <script>
-  import Layout from './components/Layout/Layout.svelte'
+  import { globalBus } from '../../modules/bus';
+
+  import Layout from './components/Layout/Layout.svelte';
+
+  export let view;
+
+  let blurred = true;
+
+  $: console.log({ view });
+
+  globalBus.on('loaderHidden', () => {
+    blurred = false;
+  });
 </script>
 
-<Layout />
+<style src='./Wave.pcss'></style>
+
+<Layout {view} {blurred} />
