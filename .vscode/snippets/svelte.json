@@ -1,0 +1,12 @@
+{
+  "New File": {
+    "prefix": "svelte",
+    "body": [
+      "<script>\n",
+      "</script>",
+      "\n<style src='${TM_FILENAME_BASE}.pcss'></style>",
+      "\n<div></div>\n"
+    ],
+    "description": "New File Template"
+  }
+}

@@ -1,14 +1,14 @@
 <script>
   import Tile from './Tile/Tile.svelte';
   export let tiles = [
-    { link: '/home', caption: 'Home' },
-    { link: '/store', caption: 'Store' },
+    { link: '/snake', caption: 'Snake' },
+    { link: '/chess', caption: 'Chess' },
   ]; // mock
 </script>
 
-<style src='./Menu.pcss'></style>
+<style src='./Feed.pcss'></style>
 
-<div class='menu'>
+<div class='feed'>
   {#each tiles as tile}
     <Tile {...tile} />
   {/each}
