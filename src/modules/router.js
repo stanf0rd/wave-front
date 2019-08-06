@@ -101,19 +101,18 @@ export default class Router {
   }
 
   openClickedLink(event) {
-    const target = event.target instanceof HTMLAnchorElement
-      ? event.target
-      : event.target.parentElement;
+    const anchor = event.path.find(
+      item => item instanceof HTMLAnchorElement
+    )
 
-    if (target instanceof HTMLAnchorElement
-    && (target.getAttribute('type') !== 'submit')) {
+    if (anchor && (anchor.getAttribute('type') !== 'submit')) {
       event.preventDefault();
-      if (target.pathname) {
-        this.open(target.pathname, target.search);
+      if (anchor.pathname) {
+        this.open(anchor.pathname, anchor.search);
       } else {
-        const busEvent = target.getAttribute('event');
+        const busEvent = anchor.getAttribute('event');
         if (busEvent) {
-          globalbBus.emit(busEvent);
+          globalBus.emit(busEvent);
         }
       }
     }

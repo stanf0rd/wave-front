@@ -1,10 +1,8 @@
 <script>
   import { globalBus } from '../../modules/bus';
-
   import Layout from './components/Layout/Layout.svelte';
 
-  export let view;
-
+  export let view = 'home';
   let blurred = true;
 
   $: console.log({ view });
@@ -16,4 +14,4 @@
 
 <style src='./Wave.pcss'></style>
 
-<Layout {view} {blurred} />
+<Layout view={view || 'home'} {blurred} />
