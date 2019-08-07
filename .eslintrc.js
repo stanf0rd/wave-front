@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: 'airbnb/base',
+  extends: 'airbnb-base',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -11,5 +11,6 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-multi-spaces': 'off',
+    'no-underscore-dangle': 'off',
   }
 };

@@ -1,27 +1,25 @@
 import { globalBus } from './bus';
 import { logout, getProfile } from './network';
 
+import { user } from './stores';
 
 class UserService {
   constructor() {
     this.user = {};
-    this.loggedIn = false;
-    globalBus.on('checkUser', () => {
-      this.updatePromise = this.update();
-    });
+    globalBus.on('checkUser', () => this.update());
   }
 
 
   async isLoggedIn() {
     await this.updatePromise;
-    return this.loggedIn;
+    return Boolean(this.user);
   }
 
 
   async getUser() {
     await this.updatePromise;
 
-    if (!this.loggedIn) {
+    if (!this.user) {
       globalBus.emit('unathorized');
       return { err: 'unathorized' };
     }
@@ -30,29 +28,29 @@ class UserService {
   }
 
   async update(action) {
-    this.updatePromise = this._update_(action);
+    this.updatePromise = this.__update(action);
     await this.updatePromise;
     globalBus.emit('userUpdated');
   }
 
 
-  async _update_(action) {
+  async __update(action) {
     if (action === 'logout') {
-      this.loggedIn = false;
-      this.user = {};
+      this.user = null;
 
       logout();
     } else {
-      const { err, profile: user } = await getProfile();
+      const { err, profile } = await getProfile();
       if (err) {
         if (err.status !== 401) console.error(err);
-        this.user = {};
-        this.loggedIn = false;
+        this.user = null;
       } else {
-        this.user = user;
-        this.loggedIn = true;
+        this.user = profile;
       }
     }
+
+    user.set(this.user);
+    return this.user;
   }
 }
 

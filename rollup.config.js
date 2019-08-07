@@ -21,7 +21,7 @@ export default {
       preprocess: preprocess({
         postcss: true,
       }),
-      css: (css) => css.write('dist/style.css'),
+      css: css => css.write('dist/style.css'),
     }),
     resolve({ extensions: ['.mjs', '.js'] }),
     replace({
@@ -29,10 +29,9 @@ export default {
     }),
     copy({
       targets: [
-        'static',
-        'src/index.html',
+        { src: 'static', dest: 'dist' },
+        { src: 'src/index.html', dest: 'dist' },
       ],
-      outputFolder: 'dist',
     }),
     process.env.BUILD === 'production' && terser(),
   ],
