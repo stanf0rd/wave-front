@@ -5,5 +5,5 @@
 <style src='./Avatar.pcss'></style>
 
 <div class='avatar'>
-  <img {src} alt="" />
+  <img class='avatar__img' {src} alt="" />
 </div>
