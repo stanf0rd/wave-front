@@ -7,6 +7,8 @@ class UserService {
   constructor() {
     this.user = {};
     globalBus.on('checkUser', () => this.update());
+
+    this.update();
   }
 
 

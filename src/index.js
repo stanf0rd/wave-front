@@ -14,6 +14,6 @@ const router = new Router(appManager);
 
 router.start();
 
-setTimeout(() => {
+globalBus.on('userUpdated', () => {
   globalBus.emit('ready');
-}, 1000);
+}, true);

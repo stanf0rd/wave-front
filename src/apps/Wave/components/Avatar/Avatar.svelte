@@ -1,7 +1,9 @@
 <script>
-
+  export let src;
 </script>
 
 <style src='./Avatar.pcss'></style>
 
-<div></div>
+<div class='avatar'>
+  <img {src} alt="" />
+</div>

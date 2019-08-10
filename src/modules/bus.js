@@ -17,6 +17,8 @@ export class Bus {
   }
 
   emit(event, ...data) {
+    console.log(`${event} emitted`);
+
     if (!this.listeners[event]) return;
     this.listeners[event].forEach(l => l.listener(...data));
   }
