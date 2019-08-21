@@ -2,14 +2,27 @@ import AppManager from './modules/app_manager';
 import Router from './modules/router';
 import { globalBus } from './modules/bus';
 
-import Loader from './apps/Loader/Loader.svelte';
-import Wave from './apps/Wave/Wave.svelte';
+import Loader from './core/Loader/Loader.svelte';
+import Wave from './core/Wave/Wave.svelte';
+import AppContainer from './core/Container/Container.svelte';
+import Frame from './apps/Frame/Frame.svelte';
 
-const loaderContainer = document.querySelector('#loader');
-new Loader({ target: loaderContainer });
+const loaderDiv = document.querySelector('#loader');
+new Loader({ target: loaderDiv });
 
-const waveContainer = document.querySelector('#wave');
-const appManager = new AppManager(Wave, waveContainer);
+const waveDiv = document.querySelector('#wave');
+const appsDiv = document.querySelector('#apps');
+const appManager = new AppManager(
+  new Wave({ target: waveDiv }),
+  new AppContainer({ target: appsDiv }),
+);
+
+appManager.registerApp(
+  'test',
+  Frame,
+  { src: 'https://snakewave.com', title: 'test' },
+);
+
 const router = new Router(appManager);
 
 router.start();

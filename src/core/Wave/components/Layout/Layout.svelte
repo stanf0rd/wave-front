@@ -4,12 +4,12 @@
   import Menu from '../Menu/Menu.svelte';
 
   export let view;
-
+  export let blurred;
 </script>
 
 <style src='./Layout.pcss'></style>
 
-<div class='layout'>
+<div class='layout' class:layout_blurred={blurred}>
   <div class='layout__item layout__header'>
     <Header />
   </div>

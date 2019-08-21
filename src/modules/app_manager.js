@@ -5,21 +5,16 @@ export default class AppManager {
   /**
    * Initiates AppManager, starts and inits main app
    *
-   * @param MainApp MainApp class
-   * @param {HTMLElement} container
-   * Element which will contain main app and appContainer
+   * @param mainApp svelte-MainApp instance
+   * @param appContainer svelte-Container instance
    */
-  constructor(MainApp, container) {
+  constructor(mainApp, appContainer) {
     this.appClasses = {};
     this.appInstances = {};
     this.startedAppsOrder = [];
 
-    this.mainApp = new MainApp({ target: container });
-
-    // this.appContainer = this.mainApp.appContainer;
-
-    this.activeApp = this.mainApp;
-    this.activeAppName = 'main';
+    this.mainApp = mainApp;
+    this.appContainer = appContainer;
 
     globalBus.on('regApp', this.registerApp.bind(this));
   }
@@ -32,12 +27,12 @@ export default class AppManager {
    * @throws {Error} app with this appName alreaddy registered
    * @memberof AppManager
    */
-  registerApp(name, App) {
+  registerApp(name, App, data) {
     if (name in this.appClasses) {
       throw new Error(`App with name ${name} is already registered.`);
     }
 
-    this.appClasses[name] = App;
+    this.appClasses[name] = { App, data };
     return this;
   }
 
@@ -61,7 +56,7 @@ export default class AppManager {
    */
   async allowedToOpen(appName) {
     this.allowedApps = ['main', 'terminal'];
-    return this.allowedApps.includes(appName) || userService.isLoggedIn()
+    return this.allowedApps.includes(appName) || userService.isLoggedIn();
   }
 
   /**
@@ -87,8 +82,9 @@ export default class AppManager {
     }
 
     if (!this.appInited(appName)) {
-      const App = this.appClasses[appName];
-      this.appInstances[appName] = new App(appName, this.appContainer.screen);
+      const { App, data } = this.appClasses[appName];
+      const target = this.appContainer.getTarget();
+      this.appInstances[appName] = new App({ target, props: data });
     }
 
     /**
@@ -101,13 +97,13 @@ export default class AppManager {
       return;
     }
 
-    console.log(`[APP] ${appName} => ${this.activeAppName}`);
+    console.log(`[APP] ${this.activeAppName} => ${appName}`);
 
     // hiding previous app
     if (this.activeAppName === 'main') {
       this.appContainer.show();
       // TODO: await launch animation
-      await this.mainApp.blur();
+      await this.mainApp.blur();  // TODO: to svelte
     } else if (this.activeAppName) {
       this.activeApp.pause();
     }
@@ -115,7 +111,7 @@ export default class AppManager {
     if (app === this.mainApp) {
       // TODO: await close animation
       this.appContainer.hide();
-      await this.mainApp.unblur();
+      await this.mainApp.unblur();  // TODO: to svelte
     } else {
       // TODO: async show bar for 3 seconds
       // eslint-disable-next-line no-lonely-if
@@ -138,7 +134,7 @@ export default class AppManager {
       throw new Error('App not exists');
     }
 
-    this.appInstances[appName].stop();
+    this.appInstances[appName].$destroy();
     delete this.appInstances[appName];
 
     this._removeFromActive_(appName);
@@ -152,7 +148,7 @@ export default class AppManager {
     if (this.startedAppsOrder.length >= 5) {
       const deletedAppName = this.startedAppsOrder[0].url;
       delete this.appInstances[deletedAppName];
-      this.startedAppsOrder[0].stop();
+      this.startedAppsOrder[0].$destroy();
       this.startedAppsOrder.shift();
     }
 

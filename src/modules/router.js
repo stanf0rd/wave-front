@@ -101,9 +101,9 @@ export default class Router {
   }
 
   openClickedLink(event) {
-    const anchor = event.path.find(
-      item => item instanceof HTMLAnchorElement
-    )
+    const anchor = event.composedPath().find(
+      item => item instanceof HTMLAnchorElement,
+    );
 
     if (anchor && (anchor.getAttribute('type') !== 'submit')) {
       event.preventDefault();

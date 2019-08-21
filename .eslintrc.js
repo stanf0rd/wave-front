@@ -9,8 +9,10 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'no-new': 'off',
     'no-console': 'off',
     'no-multi-spaces': 'off',
     'no-underscore-dangle': 'off',
+    'arrow-parens': 'off',
   }
 };

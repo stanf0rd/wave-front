@@ -5,11 +5,16 @@
   export let view = 'home';
   let blurred = true;
 
+  export function blur() {
+    blurred = true;
+  }
+
+  export function unblur() {
+    blurred = false;
+  }
+
   $: console.log({ view });
 
-  globalBus.on('loaderHidden', () => {
-    blurred = false;
-  });
 </script>
 
 <style src='./Wave.pcss'></style>
