@@ -66,7 +66,7 @@ export default class Router {
   }
 
 
-  open(fullPath, paramString) {
+  async open(fullPath, paramString) {
     const path = clearPath(fullPath);  // aaaaa/bbbbbb/cccccc/dddddd
     const params = splitParams(paramString);  // {a=1, b=2}
 
@@ -84,13 +84,15 @@ export default class Router {
       view = path;
     }
 
-    this.appManager.openApp(app, { view, params });
+    let [openedApp, openedView] = await this.appManager.openApp(app, { view, params });
+    if (openedApp === 'main') openedApp = '';
+    if (openedView) openedView = `/${openedView}`;
+    const newPath = `${openedApp}${openedView}`;
 
-    // CHECK: replaceState if view or params list changed
     if (this.appManager.activeAppName !== app) {
-      window.history.pushState(null, '', fullPath);
+      window.history.pushState(null, '', newPath);
     } else {
-      window.history.replaceState(null, '', fullPath);
+      window.history.replaceState(null, '', newPath);
     }
   }
 

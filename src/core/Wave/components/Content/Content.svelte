@@ -15,10 +15,7 @@
 
   // state
   let viewComponent;
-  $: {
-    console.log('content:', { view });
-    viewComponent = viewList[view];
-  }
+  $: viewComponent = viewList[view] || viewList['home'];
 </script>
 
 <svelte:component this={viewComponent} />

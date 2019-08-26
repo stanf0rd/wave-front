@@ -3,9 +3,19 @@
   export let title;
 
   let started = false;
+  let active = false;
 
   export function start() {
     started = true;
+    active = true;
+  }
+
+  export function pause() {
+    active = false;
+  }
+
+  export function resume() {
+    active = true;
   }
 
 </script>
@@ -15,5 +25,5 @@
 {#if !started}
   <h1>{title}</h1>
 {:else}
-  <iframe class='frame' {src} {title}></iframe>
+  <iframe class='frame' {src} {title} frameborder="0"></iframe>
 {/if}

@@ -77,8 +77,7 @@ export default class AppManager {
     }
 
     if (!(await this.allowedToOpen(appName))) {
-      await this.openApp('main', { view, params });
-      return;
+      return this.openApp('main', { view, params });
     }
 
     if (!this.appInited(appName)) {
@@ -93,28 +92,28 @@ export default class AppManager {
      */
     const app = this.appInstances[appName] || this.mainApp;
     app.$set({ view, ...params });
+    app.view = view;  // to cause synchronous update
     if (app === this.activeApp) {
-      return;
+      return [this.activeAppName, this.activeApp.view];
     }
 
     console.log(`[APP] ${this.activeAppName} => ${appName}`);
 
     // hiding previous app
     if (this.activeAppName === 'main') {
-      this.appContainer.show();
-      // TODO: await launch animation
-      await this.mainApp.blur();  // TODO: to svelte
+      await this.mainApp.deactivate();  // TODO: to svelte
     } else if (this.activeAppName) {
+      // TODO: await close animation
       this.activeApp.pause();
+      this.appContainer.hide();
     }
 
+    // opening new
     if (app === this.mainApp) {
-      // TODO: await close animation
-      this.appContainer.hide();
-      await this.mainApp.unblur();  // TODO: to svelte
+      await this.mainApp.activate();  // TODO: to svelte
     } else {
-      // TODO: async show bar for 3 seconds
-      // eslint-disable-next-line no-lonely-if
+      this.appContainer.show();
+      // TODO: await launch animation
       if (!app.started) {
         // TODO: show loader
         /* await */ app.start();
@@ -126,6 +125,8 @@ export default class AppManager {
     this.activeAppName = appName;
 
     if (appName !== 'main') this._addToActive_(appName);
+
+    return [this.activeAppName, this.activeApp.view];
   }
 
 
