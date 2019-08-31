@@ -3,9 +3,15 @@
 
   let hidden = false;
 
+  const hidePromise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 1000);
+  });
+
   globalBus.on('ready', () => {
-    hidden = true;
-    globalBus.emit('loaderHidden');
+    hidePromise.then(() => {
+      hidden = true;
+      globalBus.emit('loaderHidden');
+    })
   });
 </script>
 

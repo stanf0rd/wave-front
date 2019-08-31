@@ -14,10 +14,14 @@
   border-radius: 5px;
   background-color: rgba(100%, 100%, 100%, .6);
 
-  transition: transform 0.5s cubic-bezier(.36,1.08,.55,.93);
+  transition: transform 0.3s cubic-bezier(.36,1.08,.55,.93);
 
   &_hidden {
-    /* transform: translateY(-100px); */
+    transform: translateY(-70px);
+  }
+
+  &_sticked-out {
+    transform: translateY(-55px);
   }
 
   &__icon {
@@ -26,5 +30,20 @@
 
   &:hover {
     cursor: pointer;
+  }
+
+  &__activator {
+    position: absolute;
+    z-index: 10;
+
+    right: 0;
+    top: 0;
+
+    width: 100px;
+    height: 100px;
+
+    &_hidden {
+      visibility: hidden;
+    }
   }
 }

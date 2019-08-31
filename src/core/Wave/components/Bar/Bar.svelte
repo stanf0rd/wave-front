@@ -1,6 +1,8 @@
 <script>
+  export let enabled = false;
   export let hidden = true;
 
+  let stickedOut;
   let hideTimer;
 
   function dropHideTimer() {
@@ -8,20 +10,45 @@
   }
 
   function runHideTimer() {
-    hideTimer = setTimeout(() => {hidden = true}, 3000);
+    dropHideTimer();
+    hideTimer = setTimeout(() => {
+      hidden = true;
+    }, 3000);
   }
 
-  $: if (!hidden) {
+  $: if (enabled) {
     runHideTimer();
+    hidden = false;
+  } else {
+    dropHideTimer();
+    hidden = true;
   }
 </script>
 
 <style src='./Bar.pcss'></style>
 
+
+<div
+  class='bar__activator'
+  class:bar__activator_hidden={!enabled || !hidden}
+  on:mouseover={() => {
+    dropHideTimer();
+    stickedOut = true;
+  }}
+  on:mouseout={() => {
+    runHideTimer();
+    stickedOut = false;
+  }}
+/>
+
 <div
   class='bar'
   class:bar_hidden={hidden}
-  on:mouseover={dropHideTimer}
+  class:bar_sticked-out={stickedOut}
+  on:mouseover={() => {
+    hidden = false;
+    dropHideTimer();
+  }}
   on:mouseout={runHideTimer}
 >
   <a
