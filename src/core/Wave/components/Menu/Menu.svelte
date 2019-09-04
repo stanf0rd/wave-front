@@ -1,8 +1,8 @@
 <script>
   import Tile from './Tile/Tile.svelte';
   export let tiles = [
-    { link: '/home', caption: 'Home' },
-    { link: '/store', caption: 'Store' },
+    { link: '/home', caption: 'Home', icon: 'home' },
+    { link: '/store', caption: 'Store', icon: 'shop' },
   ]; // mock
 </script>
 

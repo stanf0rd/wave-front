@@ -2,11 +2,16 @@
   display: block;
   margin: 10px;
 
-  color: white;
+  color: #F5F5F5;
   text-decoration: none;
 
   &:first-child {
-    margin-left: 0;
+    margin-left: 0px;
+    padding-left: var(--frame-width);
+  }
+
+  &:last-child {
+    padding-right: var(--frame-width);
   }
 
   &__card {
@@ -15,7 +20,8 @@
 
     display: flex; /* REMOVE */
 
-    background-color: gray;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
   }
 
   &__caption {

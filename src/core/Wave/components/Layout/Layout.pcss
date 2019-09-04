@@ -1,3 +1,7 @@
+:global(:root) {
+  --frame-width: 40px;
+}
+
 .layout {
   height: 100vh;
   width: 100vw;
@@ -8,7 +12,7 @@
 
   &__item {
     box-sizing: border-box;
-    padding: 0 40px; /* TODO: media queries */
+    padding: 0 var(--frame-width); /* TODO: media queries */
 
     display: flex;
     width: 100%;

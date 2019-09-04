@@ -1,7 +1,7 @@
 <script>
   export let link;
   export let caption;
-  export let icon ;
+  export let icon;
   export let background;
 
   // TODO: background feature
@@ -18,7 +18,7 @@
     />
   {:else}
     <div class='tile__card'>
-      <i class='tile__icon material-icons'>error_outline</i>
+      <i class='tile__icon material-icons-round'>{icon || 'error_outline'}</i>
     </div>
   {/if}
   <p class='tile__caption'>{caption}</p>
