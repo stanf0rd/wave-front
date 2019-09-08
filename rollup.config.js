@@ -1,7 +1,6 @@
-/* eslint-disable global-require */
-
 import copy from 'rollup-plugin-copy';
 import preprocess from 'svelte-preprocess';
+import livereload from 'rollup-plugin-livereload';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
@@ -33,6 +32,8 @@ export default {
         { src: 'src/index.html', dest: 'dist' },
       ],
     }),
-    process.env.BUILD === 'production' && terser(),
+    process.env.BUILD === 'production'
+      ? terser()
+      : livereload({ watch: 'dist' }),
   ],
 };

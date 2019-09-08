@@ -27,7 +27,6 @@
 
 <style src='./Bar.pcss'></style>
 
-
 <div
   class='bar__activator'
   class:bar__activator_hidden={!enabled || !hidden}

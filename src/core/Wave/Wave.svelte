@@ -41,14 +41,13 @@
     console.log(view);
   }
 
-  $: {
-    console.log(`MainApp status changed: active = ${active}`);
-    barEnabled = started && !active;
-  }
+  $: console.log(`MainApp status changed: active = ${active}`);
+
+  $: barEnabled = started && !active;
 </script>
 
 <style src='./Wave.pcss'></style>
 
 <svelte:options accessors={true} />
 <Bar enabled={barEnabled} />
-<Layout view={view || 'home'} blurred={!active} />
+<Layout view={view || 'home'} blurred={!started || !active} />

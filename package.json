@@ -34,6 +34,7 @@
     "eslint-plugin-import": "^2.18.2",
     "express": "^4.17.1",
     "express-history-api-fallback": "^2.2.1",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "rollup-plugin-livereload": "^1.0.1"
   }
 }
