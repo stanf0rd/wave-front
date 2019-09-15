@@ -56,7 +56,7 @@ export default class Router {
   }
 
 
-  start() {
+  async start() {
     this.openFromAddressBar();
 
     this.listeners.forEach((listener) => {

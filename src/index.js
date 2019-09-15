@@ -1,6 +1,7 @@
 import AppManager from './modules/app_manager';
 import Router from './modules/router';
 import { globalBus } from './modules/bus';
+import preparer from './modules/prepare';
 
 import Loader from './core/Loader/Loader.svelte';
 import Wave from './core/Wave/Wave.svelte';
@@ -27,6 +28,5 @@ const router = new Router(appManager);
 
 router.start();
 
-globalBus.on('userUpdated', () => {
-  globalBus.emit('ready');
-}, true);
+preparer.add('Get user data', globalBus.getPromise('userUpdated'), true);
+preparer.prepare();

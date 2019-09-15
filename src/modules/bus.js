@@ -22,6 +22,10 @@ export class Bus {
     if (!this.listeners[event]) return;
     this.listeners[event].forEach(l => l.listener(...data));
   }
+
+  getPromise(event) {
+    return new Promise(resolve => this.on(event, resolve, true));
+  }
 }
 
 

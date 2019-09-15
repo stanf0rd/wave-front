@@ -101,7 +101,7 @@ export default class AppManager {
 
     // hiding previous app
     if (this.activeAppName === 'main') {
-      await this.mainApp.deactivate();  // TODO: to svelte
+      await this.mainApp.deactivate();
     } else if (this.activeAppName) {
       // TODO: await close animation
       this.activeApp.pause();
@@ -110,7 +110,7 @@ export default class AppManager {
 
     // opening new
     if (app === this.mainApp) {
-      await this.mainApp.activate();  // TODO: to svelte
+      await this.mainApp.activate();
     } else {
       this.appContainer.show();
       // TODO: await launch animation

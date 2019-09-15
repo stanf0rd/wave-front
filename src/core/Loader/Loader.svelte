@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import { globalBus } from '../../modules/bus';
 
   // settings
@@ -15,28 +16,33 @@
   let removed = false;
   let repeat = 'indefinite';
 
-  function stop() {
-    return new Promise((resolve, reject) => {
-      offsetAnimation.addEventListener('beginEvent', () => {
-        offsetAnimation.endElementAt(interval/2);
-        arrayAnimation.endElementAt(interval/2);
-      }, { once: true });
+  async function stop() {
+    function cancelNextRepeat() {
+      arrayAnimation.endElementAt(interval/2);
+      offsetAnimation.endElementAt(interval/2);
+    }
 
-      offsetAnimation.addEventListener('endEvent', () => {
+    return new Promise(resolve => {
+      arrayAnimation.addEventListener('beginEvent', cancelNextRepeat);
+      arrayAnimation.addEventListener('repeatEvent', cancelNextRepeat);
+
+      arrayAnimation.addEventListener('endEvent', () => {
+        arrayAnimation.removeEventListener('beginEvent', cancelNextRepeat);
+        arrayAnimation.removeEventListener('repeatEvent', cancelNextRepeat);
+
         setTimeout(resolve, 1000);
       }, { once: true });
     });
   }
 
-  globalBus.on('ready', () => {
-    stop().then(() => {
-      hidden = true;
-        globalBus.emit('loaderHidden');
-      loader.addEventListener('transitionend', () => {
-        removed = true;
-      }, { once: true });
-    })
-  });
+  onMount(() => globalBus.on('ready', async () => {
+    await stop();
+    hidden = true;
+    globalBus.emit('loaderHidden');
+    loader.addEventListener('transitionend', () => {
+      removed = true;
+    }, { once: true });
+  }));
 </script>
 
 <style src='./Loader.pcss'></style>
@@ -73,20 +79,6 @@
           fill='freeze'
         />
         <animate
-          bind:this={offsetAnimation}
-          accumulate='none'
-          additive='replace'
-          attributeName='stroke-dashoffset'
-          begin='0s'
-          calcMode='linear'
-          dur={interval}
-          fill='remove'
-          keyTimes='0;0.5;1'
-          repeatCount={repeat}
-          restart='always'
-          values='-200;0;0'
-        />
-        <animate
           bind:this={arrayAnimation}
           accumulate='none'
           dditive='replace'
@@ -100,6 +92,20 @@
           repeatCount={repeat}
           restart='always'
           values='0 350;350 350;0 350'
+        />
+        <animate
+          bind:this={offsetAnimation}
+          accumulate='none'
+          additive='replace'
+          attributeName='stroke-dashoffset'
+          begin='0s'
+          calcMode='linear'
+          dur={interval}
+          fill='remove'
+          keyTimes='0;0.5;1'
+          repeatCount={repeat}
+          restart='always'
+          values='-200;0;0'
         />
       </text>
     </svg>
