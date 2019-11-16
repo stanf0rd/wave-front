@@ -20,4 +20,31 @@ app.get('/users/me', (req, res) => {
   });
 });
 
+app.get('/storedata', (req, res) => {  // temp url
+  res.send({
+    categories: [
+      'TOP 3',
+      '2019/2',
+      '2019/1',
+      '2018/2',
+      '2018/1',
+    ],
+    apps: [
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
+    ],
+  });
+});
+
+app.get('/apps/me', (req, res) => {
+  res.send({
+    apps: [
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
+    ],
+  });
+});
+
 app.use(fallback('index.html', { root: 'dist' }));

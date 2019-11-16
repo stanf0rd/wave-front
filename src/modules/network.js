@@ -20,7 +20,7 @@ export async function getProfile() {
     const profile = await ajax.GET({
       path: '/users/me',
     });
-    return { profile };
+    return { data: profile };
   } catch (err) {
     return { err };
   }
@@ -47,7 +47,7 @@ export async function getUser(name) {
     const user = await ajax.GET({
       path: `/users/${name}`,
     });
-    return { user };
+    return { data: user };
   } catch (err) {
     return { err };
   }
@@ -63,7 +63,7 @@ export async function login(loginData) {
       body: loginData,
     });
   } catch (err) {
-    return { err };
+    return err;
   }
 }
 
@@ -72,6 +72,34 @@ export async function logout() {
     return await ajax.DELETE({
       path: '/session',
     });
+  } catch (err) {
+    return err;
+  }
+}
+
+
+/*                       store                       */
+
+export async function getStore() {
+  try {
+    const store = await ajax.GET({
+      path: '/storedata',  // FIXME: temporary solution!
+    });
+    return { data: store };
+  } catch (err) {
+    return { err };
+  }
+}
+
+
+/*                        home                       */
+
+export async function getHome() {
+  try {
+    const home = await ajax.GET({
+      path: '/apps/me',  // FIXME: temporary solution!
+    });
+    return { data: home };
   } catch (err) {
     return { err };
   }

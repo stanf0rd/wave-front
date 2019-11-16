@@ -1,3 +1,30 @@
 .list {
-  
+  width: 30vw;
+  max-width: 220px;
+  padding: 0;
+  border-right: 1px solid #F5F5F5;
+
+  &__item {
+    height: 50px;
+    padding-left: 10px;
+
+    display: flex;
+    align-items: center;
+
+    font: 24px Gilroy-Light;
+    transition: background-color .2s ease-out;
+    background-color: transparent;
+
+    border-radius: 4px 0 0 4px;
+
+    &_hovered, &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+@media (--mobile) {
+  .list {
+    display: none;
+  }
 }

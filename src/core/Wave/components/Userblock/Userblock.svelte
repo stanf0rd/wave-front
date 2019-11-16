@@ -1,5 +1,5 @@
 <script>
-  import { user } from '../../../../modules/stores';
+  import user from '../../../../modules/user';
 
   import Avatar from '../Avatar/Avatar.svelte';
 

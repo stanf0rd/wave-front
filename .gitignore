@@ -9,3 +9,6 @@ dist
 
 # OS stuff
 .DS_Store
+
+# jest
+coverage

@@ -1,5 +1,5 @@
 import { globalBus } from './bus';
-import userService from './userservice';
+import user from './user';
 
 export default class AppManager {
   /**
@@ -56,7 +56,7 @@ export default class AppManager {
    */
   async allowedToOpen(appName) {
     this.allowedApps = ['main', 'terminal'];
-    return this.allowedApps.includes(appName) || userService.isLoggedIn();
+    return this.allowedApps.includes(appName) || user.authorized;
   }
 
   /**

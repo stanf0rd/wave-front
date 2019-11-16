@@ -34,7 +34,8 @@
 
   async function prepareAnimation() {
     // await for some unknown shit...
-    await sleep(10);
+    // otherwise transitionEnd event don't fires
+    await sleep(100);
     await unblur();
     await blur();
   }
