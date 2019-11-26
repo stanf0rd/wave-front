@@ -1,5 +1,3 @@
-import { globalBus } from './bus';
-
 class Preparer {
   constructor() {
     this.preparing = {};
@@ -30,8 +28,7 @@ class Preparer {
       });
     });
 
-    this.getPreparePromise()
-      .then(() => globalBus.emit('ready'));
+    return this.getPreparePromise();
   }
 }
 

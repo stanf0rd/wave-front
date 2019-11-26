@@ -84,10 +84,13 @@ export default class Router {
       view = path;
     }
 
-    let [openedApp, openedView] = await this.appManager.openApp(app, { view, params });
-    if (openedApp === 'main') openedApp = '';
-    if (openedView) openedView = `/${openedView}`;
-    const newPath = `${openedApp}${openedView}`;
+    const [openedApp, openedView] = await this.appManager.requestApp(app, { view, ...params });
+
+    const newPath = `${
+      openedApp === 'main' ? '' : openedApp
+    }${
+      openedView ? `/${openedView}` : ''
+    }`;
 
     if (this.appManager.activeAppName !== app) {
       window.history.pushState(null, '', newPath);

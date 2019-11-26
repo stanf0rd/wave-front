@@ -1,4 +1,4 @@
-import { globalBus } from './bus';
+import { globalBus as bus } from './bus';
 
 const URL = '';
 

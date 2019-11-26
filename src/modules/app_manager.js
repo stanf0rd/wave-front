@@ -3,7 +3,7 @@ import user from './user';
 
 export default class AppManager {
   /**
-   * Initiates AppManager, starts and inits main app
+   * Initiates AppManager
    *
    * @param mainApp svelte-MainApp instance
    * @param appContainer svelte-Container instance
@@ -19,11 +19,13 @@ export default class AppManager {
     globalBus.on('regApp', this.registerApp.bind(this));
   }
 
+
   /**
    * Registeres app class
    *
    * @param {String} appName used as unique app url
    * @param {BaseApplication} App app class
+   * @param {object} data properties send to app on init
    * @throws {Error} app with this appName alreaddy registered
    * @memberof AppManager
    */
@@ -36,13 +38,62 @@ export default class AppManager {
     return this;
   }
 
+
+  /**
+   * Proceeds request for active app switch
+   * or state change of current active app
+   *
+   * @param {String} id name or id of app to switch/change
+   * @param {Object} [options={}] view and other app params
+   * @returns Array of two items: name of new active app and its view name
+   * @memberof AppManager
+   */
+  async requestApp(id, options) {
+    if (!this.appExists(id)) {
+      throw new Error(`App ${id} not exists`);
+    }
+
+    if (!(await this.allowedToOpen(id))) {
+      return this.requestApp('main', options);
+    }
+
+    if (!this.appInited(id)) this._initApp(id);
+
+    await this._sendAppParams(id, options);
+
+    if (id !== this.activeAppName) {
+      console.log(`[APP] ${this.activeAppName} => ${id}`);
+
+      this._hideCurrentApp();
+      this._makeAppActive(id);
+    }
+
+    return [this.activeAppName, this.activeApp.view];
+  }
+
+
+  closeApp(appName) {
+    if (!this.appExists(appName)) {
+      throw new Error(`App ${appName} not exists`);
+    }
+
+    this.appInstances[appName].$destroy();
+    delete this.appInstances[appName];
+
+    this._removeFromActive(appName);
+  }
+
+
   /**
    * Checks, if app is known by AppManager, or is MainApp.
-   * @param {String} appName
+   * @param {String} id name or id of app
+   * @returns {Boolean}
+   * @memberof AppManager
    */
-  appExists(appName) {
-    return (appName in this.appClasses) || (appName === 'main');
+  appExists(id) {
+    return (id in this.appClasses) || (id === 'main');
   }
+
 
   /**
    * Checks if it is allowed to open app.
@@ -51,7 +102,7 @@ export default class AppManager {
    * Other apps want user to be logged in.
    *
    * @param {String} appName
-   * @returns {Boolean} `true` if it is allowed
+   * @returns {Boolean}
    * @memberof AppManager
    */
   async allowedToOpen(appName) {
@@ -71,79 +122,49 @@ export default class AppManager {
   }
 
 
-  async openApp(appName, { view, params }) {
-    if (!this.appExists(appName)) {
-      throw new Error('App not exists');
-    }
+  _initApp(appName) {
+    const { App, data } = this.appClasses[appName];
+    const target = this.appContainer.getTarget();
+    this.appInstances[appName] = new App({ target, props: data });
+  }
 
-    if (!(await this.allowedToOpen(appName))) {
-      return this.openApp('main', { view, params });
-    }
 
-    if (!this.appInited(appName)) {
-      const { App, data } = this.appClasses[appName];
-      const target = this.appContainer.getTarget();
-      this.appInstances[appName] = new App({ target, props: data });
-    }
-
-    /**
-     * App instance of application extended from BaseApp
-     * @type {BaseApp}
-     */
-    const app = this.appInstances[appName] || this.mainApp;
-    app.$set({ view, ...params });
-    app.view = view;  // to cause synchronous update
-    if (app === this.activeApp) {
-      return [this.activeAppName, this.activeApp.view];
-    }
-
-    console.log(`[APP] ${this.activeAppName} => ${appName}`);
-
-    // hiding previous app
+  _hideCurrentApp() {
     if (this.activeAppName === 'main') {
-      await this.mainApp.deactivate();
+      this.mainApp.deactivate();
     } else if (this.activeAppName) {
-      // TODO: await close animation
       this.activeApp.pause();
       this.appContainer.hide();
     }
+  }
 
-    // opening new
+
+  _makeAppActive(appName) {
+    const app = this.appInstances[appName] || this.mainApp;
+
     if (app === this.mainApp) {
-      await this.mainApp.activate();
+      this.mainApp.activate();
     } else {
       this.appContainer.show();
-      // TODO: await launch animation
-      if (!app.started) {
-        // TODO: show loader
-        /* await */ app.start();
-        // TODO: hide loader
-      } else app.resume();
+      app.started ? app.resume() : app.start();
     }
 
     this.activeApp = app;
     this.activeAppName = appName;
 
-    if (appName !== 'main') this._addToActive_(appName);
-
-    return [this.activeAppName, this.activeApp.view];
+    if (appName !== 'main') this._addToActive(appName);
   }
 
 
-  async closeApp(appName) {
-    if (!this.appExists(appName)) {
-      throw new Error('App not exists');
-    }
-
-    this.appInstances[appName].$destroy();
-    delete this.appInstances[appName];
-
-    this._removeFromActive_(appName);
+  async _sendAppParams(appName, options) {
+    const app = this.appInstances[appName] || this.mainApp;
+    if (options) await app.$set({ ...options });
   }
 
-  _addToActive_(appName) {
+
+  _addToActive(appName) {
     if (!this.appExists(appName)) {
-      throw new Error('App not exists');
+      throw new Error(`App ${appName} not exists`);
     }
 
     if (this.startedAppsOrder.length >= 5) {
@@ -160,7 +181,8 @@ export default class AppManager {
     this.startedAppsOrder.push(appName);
   }
 
-  _removeFromActive_(appName) {
+
+  _removeFromActive(appName) {
     const index = this.startedAppsOrder.indexOf(appName);
     if (index !== -1) {
       this.startedAppsOrder.splice(index, 1);

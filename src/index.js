@@ -24,9 +24,8 @@ appManager.registerApp(
   { src: 'https://snakewave.com', title: 'test' },
 );
 
-const router = new Router(appManager);
-
-router.start();
-
 preparer.add('Get user data', globalBus.getPromise('userUpdated'), true);
-preparer.prepare();
+preparer.prepare().then(() => {
+  globalBus.emit('ready');
+  new Router(appManager).start();
+});
