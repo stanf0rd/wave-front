@@ -1,13 +1,11 @@
 <script>
   import Home from '../Home/Home.svelte';
   import Store from '../Store/Store.svelte';
-  import AboutUs from '../AboutUs/AboutUs.svelte';
 
   // constants
   const viewList = {
     home: Home,
     store: Store,
-    about: AboutUs,
   };
 
   // props

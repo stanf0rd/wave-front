@@ -1,7 +1,7 @@
 <script>
   import Tile from './Tile/Tile.svelte';
 
-  import { home } from '../../../../modules/data';
+  import { home } from '/modules/data';
 
   let apps = [];
   $: apps = $home.apps;

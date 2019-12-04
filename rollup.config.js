@@ -3,6 +3,7 @@ import preprocess from 'svelte-preprocess';
 import livereload from 'rollup-plugin-livereload';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
+import rootImport from 'rollup-plugin-root-import';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
 
@@ -15,6 +16,14 @@ export default {
     sourcemap: true,
   },
   plugins: [
+    rootImport({
+      root: [
+        `${__dirname}/src`,
+        `${__dirname}/src/core/Wave`,
+      ],
+      useEntry: 'prepend',
+      extensions: ['.js', '.svelte'],
+    }),
     svelte({
       include: 'src/**/*.svelte',
       preprocess: preprocess({

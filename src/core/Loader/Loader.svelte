@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { globalBus } from '../../modules/bus';
+  import { globalBus } from '/modules/bus';
 
   // settings
   const text = 'WAVE:dev';

@@ -1,7 +1,7 @@
 <script>
-  import user from '../../../../modules/user';
+  import user from '/modules/user';
 
-  import Avatar from '../Avatar/Avatar.svelte';
+  import Avatar from '/components/Avatar/Avatar.svelte';
 
   let authorized;
   let username;

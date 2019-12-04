@@ -1,10 +1,10 @@
 <script>
   import Title from '../Title/Title.svelte';
-  import List from '../List/List.svelte';
-  import Grid from '../Grid/Grid.svelte';
-  import Description from '../Description/Description.svelte';
+  import List from './List/List.svelte';
+  import Grid from './Grid/Grid.svelte';
+  import Description from './Description/Description.svelte';
 
-  import { store } from '../../../../modules/data';
+  import { store } from '/modules/data';
 
   let apps;
   let categories;

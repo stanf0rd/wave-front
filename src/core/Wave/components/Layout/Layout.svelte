@@ -1,9 +1,9 @@
 <script>
   import { afterUpdate, onMount } from 'svelte';
 
-  import { sleep } from '../../../../modules/utils';
-  import preparer from '../../../../modules/prepare';
-  import { globalBus } from '../../../../modules/bus';
+  import { sleep } from '/modules/utils';
+  import preparer from '/modules/prepare';
+  import { globalBus } from '/modules/bus';
 
   import Header from '../Header/Header.svelte';
   import Content from '../Content/Content.svelte';

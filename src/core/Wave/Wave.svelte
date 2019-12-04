@@ -1,9 +1,9 @@
 <script>
   import { onMount } from 'svelte';
 
-  import { globalBus } from '../../modules/bus';
-  import Layout from './components/Layout/Layout.svelte';
-  import Bar from './components/Bar/Bar.svelte';
+  import { globalBus } from '/modules/bus';
+  import Layout from '/components/Layout/Layout.svelte';
+  import Bar from '/components/Bar/Bar.svelte';
 
   const viewList = [
     'home',

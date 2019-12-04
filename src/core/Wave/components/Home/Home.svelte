@@ -1,6 +1,6 @@
 <script>
   import Title from '../Title/Title.svelte';
-  import Feed from '../Feed/Feed.svelte';
+  import Feed from './Feed/Feed.svelte';
 </script>
 
 <style src='Home.pcss'></style>
