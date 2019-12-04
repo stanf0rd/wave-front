@@ -1,0 +1,88 @@
+.desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+
+  &__head {
+    height: 20vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  &__cover {
+    height: 15vh;
+    width: 27vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.1);
+    /* font: calc(100vh / 12) Gilroy-ExtraBold; */
+    font-size: calc(100vh / 12);
+  }
+
+  &__content {
+    height: 50vh;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 1.4em;
+  }
+
+  &__button {
+    height: 5vh;
+    width: 100%;
+
+    margin-top: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font: 1.4em Gilroy-Light;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &__skeleton {
+    width: 100%;
+    margin-top: 2em;
+
+    padding: 1em;
+
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+}
+
+
+.line {
+  height: 20px;
+
+  margin-bottom: 0.7em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__short {
+    width: 50%;
+  }
+
+  &__long {
+    width: 80%;
+  }
+}

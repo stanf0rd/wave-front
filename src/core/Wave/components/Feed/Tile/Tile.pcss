@@ -15,17 +15,19 @@
   }
 
   &__card {
-    height: 200px;
-    width: 400px;
+    height: 25vh;
+    width: 45vh;
 
     display: flex; /* REMOVE */
 
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    border-radius: 5px;
   }
 
-  &__caption {
-    margin: 4px;
-    font: 16px Gilroy-Light;
+  &::after {
+    display: block;
+    margin: 0.25em;
+    font: 1em Gilroy-Light;
+    content: attr(title);
   }
 }

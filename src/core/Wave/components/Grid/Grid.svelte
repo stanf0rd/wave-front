@@ -1,4 +1,6 @@
 <script>
+  import App from './App/App.svelte';
+
   export let apps;
   $: console.log(apps);
 </script>
@@ -7,6 +9,6 @@
 
 <div class='grid'>
   {#each apps as app}
-    {app}
+    <App />
   {/each}
 </div>

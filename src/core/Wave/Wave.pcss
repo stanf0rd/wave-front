@@ -11,6 +11,22 @@
   src: url('/static/fonts/Gilroy-Light.woff2') format('woff2');
 }
 
+:global(*) {
+  box-sizing: border-box;
+}
+
+:global(:root) {
+  font-size: 16px;
+
+  @media(--small) {
+    font-size: 14px;
+  }
+
+  @media(--boss) {
+    font-size: 20px;
+  }
+}
+
 :global(body) {
   margin: 0;
 

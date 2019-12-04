@@ -40,9 +40,9 @@
     await blur();
   }
 
-  onMount(() => {
-    preparer.add('Layout blurring', prepareAnimation());
-  });
+  // onMount(() => {
+  //   preparer.add('Layout blurring', prepareAnimation());
+  // });
 </script>
 
 <style src='./Layout.pcss'></style>

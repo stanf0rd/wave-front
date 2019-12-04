@@ -2,6 +2,7 @@
   import Title from '../Title/Title.svelte';
   import List from '../List/List.svelte';
   import Grid from '../Grid/Grid.svelte';
+  import Description from '../Description/Description.svelte';
 
   import { store } from '../../../../modules/data';
 
@@ -22,5 +23,6 @@
       <List list={categories} />
     </div>
     <Grid {apps} />
+    <Description />
   </div>
 {/if}

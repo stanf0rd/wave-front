@@ -23,6 +23,7 @@ app.get('/users/me', (req, res) => {
 app.get('/storedata', (req, res) => {  // temp url
   res.send({
     categories: [
+      'ALL',
       'TOP 3',
       '2019/2',
       '2019/1',
@@ -30,6 +31,18 @@ app.get('/storedata', (req, res) => {  // temp url
       '2018/1',
     ],
     apps: [
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
+      { link: '/snake', caption: 'Snake' },
+      { link: '/chess', caption: 'Chess' },
+      { link: '/test', caption: 'Test' },
       { link: '/snake', caption: 'Snake' },
       { link: '/chess', caption: 'Chess' },
       { link: '/test', caption: 'Test' },

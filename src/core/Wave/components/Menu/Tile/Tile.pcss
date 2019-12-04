@@ -10,23 +10,28 @@
   }
 
   &__card {
-    height: 100px;
-    width: 200px;
+    height: 11vh;
+    width: 20vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    border-radius: 5px;
+
+    @media(--boss) {
+      height: 10vh;
+      width: 18vh;
+    }
   }
 
   &__icon {
-    font-size: 48px;
+    font-size: 3em;
   }
 
   &__caption {
-    margin: 4px;
-    font: 16px Gilroy-Light;
+    margin: 0.25em;
+    font: 1em Gilroy-Light;
   }
 }

@@ -6,11 +6,10 @@
 
 <style src='Tile.pcss'></style>
 
-<a href={link} class='tile'>
+<a href={link} class='tile' title={caption}>
   <img
     class='tile__card'
     src={background}
     alt={caption}
   />
-  <p class='tile__caption'>{caption}</p>
 </a>
