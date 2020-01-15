@@ -6,12 +6,8 @@
 
   import { store } from '/modules/data';
 
-  let apps;
-  let categories;
-  $: categories = $store.categories;
   $: apps = $store.apps;
-
-  $: console.log(apps);
+  $: categories = $store.categories;
 </script>
 
 <style src='./Store.pcss'></style>

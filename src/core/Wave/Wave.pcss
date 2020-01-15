@@ -17,13 +17,21 @@
 
 :global(:root) {
   font-size: 16px;
+  --frame-width: 40px;
+
 
   @media(--small) {
     font-size: 14px;
+    --frame-width: 30px;
+  }
+
+  @media(--large) {
+    --frame-width: 60px;
   }
 
   @media(--boss) {
     font-size: 20px;
+    --frame-width: 90px;
   }
 }
 
