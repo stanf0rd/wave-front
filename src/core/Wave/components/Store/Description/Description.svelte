@@ -27,7 +27,7 @@
         <div class={`line line__short`}></div>
       </div>
       {#each genSkeleton() as length}
-         <div class={`line line__${length}`}></div>
+        <div class={`line line__${length}`}></div>
       {/each}
     </div>
     <div class='desc__button'>
