@@ -54,7 +54,7 @@ app.get('/apps/me', (req, res) => {
   res.send({
     apps: [
       { link: '/snake', caption: 'Snake' },
-      { link: '/chess', caption: 'Chess' },
+      { link: '/terminal', caption: 'Terminal' },
       { link: '/test', caption: 'Test' },
     ],
   });

@@ -1,7 +1,4 @@
 <script>
-  export let src;
-  export let title;
-
   let started = false;
   let active = false;
 
@@ -19,10 +16,12 @@
   }
 </script>
 
-<style src='./Frame.pcss'></style>
+<style src='./Terminal.pcss'></style>
+
+<div></div>
 
 {#if !started}
-  <h1>{title}</h1>
+  <h1>Terminal</h1>
 {:else}
-  <iframe class='frame' {src} {title} frameborder="0"></iframe>
+  <div class='terminal'>Terminal started</div>
 {/if}

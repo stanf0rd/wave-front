@@ -7,6 +7,7 @@ import Loader from './core/Loader/Loader.svelte';
 import Wave from './core/Wave/Wave.svelte';
 import AppContainer from './core/Container/Container.svelte';
 import Frame from './apps/Frame/Frame.svelte';
+import Terminal from './apps/Terminal/Terminal.svelte';
 
 const loaderDiv = document.querySelector('#loader');
 new Loader({ target: loaderDiv });
@@ -22,6 +23,11 @@ appManager.registerApp(
   'test',
   Frame,
   { src: 'https://snakewave.com', title: 'test' },
+);
+
+appManager.registerApp(
+  'terminal',
+  Terminal,
 );
 
 preparer.add('Get user data', globalBus.getPromise('userUpdated'), true);

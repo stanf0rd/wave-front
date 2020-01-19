@@ -105,7 +105,7 @@ export default class AppManager {
    * @returns {Boolean}
    * @memberof AppManager
    */
-  async allowedToOpen(appName) {
+  allowedToOpen(appName) {
     this.allowedApps = ['main', 'terminal'];
     return this.allowedApps.includes(appName) || user.authorized;
   }
@@ -124,7 +124,7 @@ export default class AppManager {
 
   _initApp(appName) {
     const { App, data } = this.appClasses[appName];
-    const target = this.appContainer.getTarget();
+    const target = this.appContainer.createContainer(appName);
     this.appInstances[appName] = new App({ target, props: data });
   }
 
@@ -134,7 +134,7 @@ export default class AppManager {
       this.mainApp.deactivate();
     } else if (this.activeAppName) {
       this.activeApp.pause();
-      this.appContainer.hide();
+      this.appContainer.hide(this.activeAppName);
     }
   }
 
@@ -145,7 +145,7 @@ export default class AppManager {
     if (app === this.mainApp) {
       this.mainApp.activate();
     } else {
-      this.appContainer.show();
+      this.appContainer.show(appName);
       app.started ? app.resume() : app.start();
     }
 
