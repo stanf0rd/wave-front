@@ -1,8 +1,5 @@
 <script>
-  import { tick } from 'svelte';
   import { blur } from 'svelte/transition';
-
-  import { sleep } from '/modules/utils';
 
   import Home from '../Home/Home.svelte';
   import Store from '../Store/Store.svelte';

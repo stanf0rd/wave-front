@@ -14,6 +14,11 @@
 
   export let view = 'home';
 
+  let active = false;
+  let barEnabled = false;
+  let started = false;
+  let lastView = view;
+
   export function activate() {
     active = true;
   }
@@ -22,12 +27,7 @@
     active = false;
   }
 
-  let active = false;
-  let barEnabled = false;
-  let started = false;
-  let lastView = view;
-
-  onMount(() => globalBus.on('loaderHidden', () => {started = true}, true));
+  onMount(() => globalBus.on('loaderHidden', () => { started = true; }, true));
 
   $: {
     if (!view || !viewList.includes(view)) {

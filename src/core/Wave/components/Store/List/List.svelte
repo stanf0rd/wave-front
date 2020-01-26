@@ -1,6 +1,6 @@
 <script>
   export let list;
-  $: console.log(list)
+  $: console.log(list);
 </script>
 
 <style src='./List.pcss'></style>
