@@ -19,14 +19,18 @@
   export let view;
 
   // state
+  let firstTime = true;
   let prevView;
   let viewComponent;
 
   $: {
     view = viewList[view] ? view : 'home';
     viewComponent = viewList[view];
-    sleep(blurDuration + 50)
-      .then(() => prevView = view);
+
+    if (firstTime) {
+      prevView = view;
+      firstTime = false;
+    }
   }
 
 </script>
@@ -36,5 +40,6 @@
     class='content'
     style='display: flex; width: 100%;'
     transition:blur={{ duration: blurDuration }}
+    on:outroend={() => prevView = view}
   ><svelte:component this={viewComponent} /></div>
 {/if}
